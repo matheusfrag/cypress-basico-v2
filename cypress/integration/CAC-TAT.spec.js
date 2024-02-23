@@ -12,7 +12,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('verifica o título da aplicação', function() {
     
         cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
-
     })
 
     it('preenche os campos obrigatórios e envia o formulário', function() {
@@ -25,7 +24,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#open-text-area').type(longText, {delay:0}).should('have.value', longText)
         cy.contains('.button', 'Enviar').click()
         cy.get('.success').should('be.visible')
-
     })
 
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
@@ -37,7 +35,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('.button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
-
     })
 
     it('campo de telefone fica vazio quando um valor não-numérico for digitado', function() {
@@ -46,7 +43,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#phone')
           .type('abcdefghij')
           .should('have.text', '')
-        
     })
     
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
@@ -59,7 +55,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('.button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
-        
     })
 
     it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
@@ -83,42 +78,45 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           .should('have.value', '31313131')
           .clear()
           .should('have.value', '')
-        
     })
 
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function(){
-      
         cy.contains('.button', 'Enviar').click()
 
         cy.get('.error').should('be.visible')
-        
     })
 
     it('envia o formuário com sucesso usando um comando customizado', function(){
-      
         cy.fillMandatoryFieldsAndSubmit()
 
-        cy.get('.success').should('be.visible')
-              
+        cy.get('.success').should('be.visible')    
     })
 
     it('seleciona um produto (YouTube) por seu texto', () => {
-      
       cy.get('#product').select('YouTube').should('have.value', 'youtube')
-
     });
 
     it('', () => {
-      
       cy.get('#product').select('mentoria').should('have.value', 'mentoria')
- 
     });
 
     it('', () => {
-      
       cy.get('#product').select(1).should('have.value', 'blog')
- 
     });
 
+    it('marca o tipo de atendimento "Feedback"', function() {
+      cy.get('input[type="radio"][value="feedback"]')
+        .check()
+        .should('have.value', 'feedback')
+    });
+
+    it.only('marca cada tipo de atendimento', function() {
+      cy.get('input[type="radio"]')  //Pega todos os radio buttons
+        .should('have.length', 3) //Confere se tem 3 radio buttons identificados no caso acima
+        .each(function($radio) { //lista todos os radio buttons e funciona como um loop passando por todos os casos
+          cy.wrap($radio).check() //wrap empacota todos os radio buttons e checka eles
+          cy.wrap($radio).should('be.checked') //wrap empacota todos os radio buttons e confere se foram marcados
+        })
+    });
 
   })
