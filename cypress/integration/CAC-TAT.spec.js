@@ -50,7 +50,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#firstName').type('Matheus').should('have.value', 'Matheus')
         cy.get('#lastName').type('Fraga').should('have.value', 'Fraga')
         cy.get('#email').type('fraga@mail.com').should('have.value', 'fraga@mail.com')
-        cy.get('#phone-checkbox').click()
+        cy.get('#phone-checkbox').check()
         cy.get('#open-text-area').type('Excelente Curso!').should('have.value', 'Excelente Curso!')
         cy.contains('.button', 'Enviar').click()
 
@@ -110,7 +110,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('have.value', 'feedback')
     });
 
-    it.only('marca cada tipo de atendimento', function() {
+    it('marca cada tipo de atendimento', function() {
       cy.get('input[type="radio"]')  //Pega todos os radio buttons
         .should('have.length', 3) //Confere se tem 3 radio buttons identificados no caso acima
         .each(function($radio) { //lista todos os radio buttons e funciona como um loop passando por todos os casos
@@ -118,5 +118,15 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           cy.wrap($radio).should('be.checked') //wrap empacota todos os radio buttons e confere se foram marcados
         })
     });
+
+    it.only('marca ambos checkboxes, depois desmarca o último', function() {
+      cy.get('input[type="checkbox"]')
+        .check()
+        .should("be.checked")
+        .last()
+        .uncheck()
+        .should('not.be.checked')
+    })
+    
 
   })
