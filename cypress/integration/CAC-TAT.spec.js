@@ -1,6 +1,5 @@
 /// <reference types="Cypress" />
 
-
 describe('Central de Atendimento ao Cliente TAT', function() {
     
     beforeEach(function() {
@@ -102,6 +101,24 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.success').should('be.visible')
               
     })
+
+    it('seleciona um produto (YouTube) por seu texto', () => {
+      
+      cy.get('#product').select('YouTube').should('have.value', 'youtube')
+
+    });
+
+    it('', () => {
+      
+      cy.get('#product').select('mentoria').should('have.value', 'mentoria')
+ 
+    });
+
+    it('', () => {
+      
+      cy.get('#product').select(1).should('have.value', 'blog')
+ 
+    });
 
 
   })
